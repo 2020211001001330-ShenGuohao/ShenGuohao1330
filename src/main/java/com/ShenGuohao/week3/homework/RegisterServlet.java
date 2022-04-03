@@ -45,8 +45,8 @@ public class RegisterServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
+        response.sendRedirect("Login.jsp");
+        /*
         try {
             sql=con.prepareStatement("SELECT * FROM usertable");
             res= sql.executeQuery();
@@ -86,7 +86,7 @@ public class RegisterServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+*/
 
 //--------        week3  Code  ------------------------
 //        PrintWriter writer=response.getWriter();
@@ -103,6 +103,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        /*
         ServletContext context=getServletContext();
         String username=context.getInitParameter("username");
         String password=context.getInitParameter("password");
@@ -118,7 +119,7 @@ public class RegisterServlet extends HttpServlet {
             throwables.printStackTrace();
         }
 
-
-
+        */
+        con=(Connection) getServletContext().getAttribute("con");
     }
 }
