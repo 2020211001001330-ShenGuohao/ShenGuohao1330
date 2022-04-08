@@ -1,5 +1,8 @@
 package com.ShenGuohao.week5;
 
+import com.ShenGuohao.dao.UserDao;
+import com.ShenGuohao.model.User;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -36,15 +39,36 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+         request.getRequestDispatcher("WEB-INF/views/Login.jsp").forward(request,response);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        System.out.println("登录值"+username+"*");
-        System.out.println("登录值"+password+"*");
+//        System.out.println("登录值"+username+"*");
+//        System.out.println("登录值"+password+"*");
         PrintWriter out = response.getWriter();
+
+        UserDao userDao=new UserDao();
+
+        try {
+            User user=userDao.findByUsernamePassword(con,username,password);
+            if(user!=null){
+                  request.setAttribute("user",user);
+                  request.getRequestDispatcher("WEB-INF/views/userInfo.jsp").forward(request,response);
+
+            }else {
+                  request.setAttribute("message","username or password fail");
+                  request.getRequestDispatcher("WEB-INF/views/Login.jsp").forward(request,response);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        /*
         boolean sign=false;
         try {
             sql=con.prepareStatement("SELECT * FROM usertable");
@@ -83,6 +107,8 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+         */
     }
 
 }
