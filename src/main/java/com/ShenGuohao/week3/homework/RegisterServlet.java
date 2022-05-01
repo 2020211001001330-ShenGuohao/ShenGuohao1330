@@ -17,7 +17,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+            request.getRequestDispatcher("WEB-INF/views/register.jsp").forward(request,response);
     }
 
     @Override
@@ -25,9 +25,9 @@ public class RegisterServlet extends HttpServlet {
         String Id=request.getParameter("Id");
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        String Email=request.getParameter("Email");
-        String Gender=request.getParameter("Gender");
-        String birthday=request.getParameter("birthday");
+        String Email=request.getParameter("email");
+        String Gender=request.getParameter("gender");
+        String birthday=request.getParameter("birthdate");
 
         PrintWriter out=response.getWriter();
         response.setContentType("text/html");
@@ -45,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        response.sendRedirect("Login.jsp");
+        response.sendRedirect("login");
         /*
         try {
             sql=con.prepareStatement("SELECT * FROM usertable");
